@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinGraphSample.Android"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinGraphSample.iOS", "XamarinGraphSample\XamarinGraphSample.iOS\XamarinGraphSample.iOS.csproj", "{B6BDAD81-1B3B-43A0-863C-5CAB0C1229C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinGraphSample", "XamarinGraphSample\XamarinGraphSample\XamarinGraphSample.csproj", "{3C01334A-BA29-493F-B805-303239203B06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamarinGraphSample", "XamarinGraphSample\XamarinGraphSample\XamarinGraphSample.csproj", "{3C01334A-BA29-493F-B805-303239203B06}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,6 +28,8 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{3F94FB62-8C8F-4E37-A4EB-41289BA335C3}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{3F94FB62-8C8F-4E37-A4EB-41289BA335C3}.Debug|Any CPU.Build.0 = Debug|x86
+		{3F94FB62-8C8F-4E37-A4EB-41289BA335C3}.Debug|Any CPU.Deploy.0 = Debug|x86
 		{3F94FB62-8C8F-4E37-A4EB-41289BA335C3}.Debug|ARM.ActiveCfg = Debug|ARM
 		{3F94FB62-8C8F-4E37-A4EB-41289BA335C3}.Debug|ARM.Build.0 = Debug|ARM
 		{3F94FB62-8C8F-4E37-A4EB-41289BA335C3}.Debug|ARM.Deploy.0 = Debug|ARM
@@ -88,6 +90,8 @@ Global
 		{D0E72BA9-0D92-48AC-908E-419C80A21C3A}.Release|x86.Build.0 = Release|Any CPU
 		{D0E72BA9-0D92-48AC-908E-419C80A21C3A}.Release|x86.Deploy.0 = Release|Any CPU
 		{B6BDAD81-1B3B-43A0-863C-5CAB0C1229C5}.Debug|Any CPU.ActiveCfg = Debug|iPhone
+		{B6BDAD81-1B3B-43A0-863C-5CAB0C1229C5}.Debug|Any CPU.Build.0 = Debug|iPhone
+		{B6BDAD81-1B3B-43A0-863C-5CAB0C1229C5}.Debug|Any CPU.Deploy.0 = Debug|iPhone
 		{B6BDAD81-1B3B-43A0-863C-5CAB0C1229C5}.Debug|ARM.ActiveCfg = Debug|iPhone
 		{B6BDAD81-1B3B-43A0-863C-5CAB0C1229C5}.Debug|iPhone.ActiveCfg = Debug|iPhone
 		{B6BDAD81-1B3B-43A0-863C-5CAB0C1229C5}.Debug|iPhone.Build.0 = Debug|iPhone

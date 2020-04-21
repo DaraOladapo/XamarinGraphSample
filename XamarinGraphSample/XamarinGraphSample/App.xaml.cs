@@ -28,13 +28,20 @@ namespace XamarinGraphSample
         public static string ClientID = "9e01a77f-8fc5-45c0-94a2-6f4e66894e04";
         public static string RedirectUri = "msal" + ClientID + "://auth";
         public static string[] Scopes = { "User.Read", "Mail.Send", "Files.ReadWrite" };
-        public static string Username = string.Empty;
-        public static string UserEmail = string.Empty;
         public App()
         {
             InitializeComponent();
+            User = new User();
+            var builder = PublicClientApplicationBuilder
+                .Create(ClientID);
+
+            if (!string.IsNullOrEmpty(iOSKeychainSecurityGroup))
+            {
+                builder = builder.WithIosKeychainSecurityGroup(iOSKeychainSecurityGroup);
+            }
+
+            PCA = builder.Build();
             MainPage = new NavigationPage(new MainPage());
-            MainPage = new MainPage();
         }
 
         protected override void OnStart()
