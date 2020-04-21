@@ -6,11 +6,45 @@
              mc:Ignorable="d"
              x:Class="XamarinGraphSample.MainPage">
 
-    <StackLayout>
-        <!-- Place new controls here -->
-        <Label Text="Welcome to Xamarin.Forms!" 
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
+    <StackLayout Margin="4,42,4,4"
+                 VerticalOptions="Center">
+        <Button Text="Sign In"
+                x:Name="SignInButton"
+        Clicked="OnSignIn" />
+        <StackLayout x:Name="UserPanel"
+                     HorizontalOptions="Center">
+            <StackLayout Padding="40"
+                         HorizontalOptions="Center">
+
+                <Frame CornerRadius="60"
+                       HorizontalOptions="Center"
+                       IsClippedToBounds="True"
+                       HeightRequest="120"
+                       WidthRequest="120"
+                       Padding="0"
+                       HasShadow="True">
+                    <Image x:Name="UserProfileImage"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"
+                           />
+                </Frame>
+            </StackLayout>
+            <Label >
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Welcome, " />
+                        <Span x:Name="UserNameLabel" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </StackLayout>
+        <Button Text="Dashboard"
+                x:Name="DashboardButton"
+                Clicked="OnDashboard" />
+        <Button Text="Sign Out"
+                x:Name="SignOutButton"
+                Clicked="OnSignOut" />
+
     </StackLayout>
 
 </ContentPage>
