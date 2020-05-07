@@ -9,7 +9,6 @@ using System.Net.Http.Headers;
 using System.Reflection;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 using XamarinGraphSample.Models;
 using Application = Xamarin.Forms.Application;
 
@@ -119,7 +118,7 @@ namespace XamarinGraphSample
         public async Task SignOut()
         {
             // Get all cached accounts for the app
-         // (Should only be one)
+            // (Should only be one)
             var accounts = await PCA.GetAccountsAsync();
             while (accounts.Any())
             {
