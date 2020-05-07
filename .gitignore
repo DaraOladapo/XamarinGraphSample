@@ -350,4 +350,4 @@ MigrationBackup/
 .ionide/
 
 #OAuth Settings
-XamarinGraphSample/XamarinGraphSample/Models/OAuthSettings.cs
+**/OAuthSettings.cs
