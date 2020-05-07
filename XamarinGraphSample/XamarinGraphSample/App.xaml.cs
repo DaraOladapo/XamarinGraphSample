@@ -1,19 +1,49 @@
-﻿using System;
+﻿using Microsoft.Graph;
+using Microsoft.Identity.Client;
+using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using XamarinGraphSample.Models;
+using Application = Xamarin.Forms.Application;
 
 namespace XamarinGraphSample
 {
     public partial class App : Application, INotifyPropertyChanged
     {
+        // UIParent used by Android version of the app
+        public static object AuthUIParent = null;
+
+        // Keychain security group used by iOS version of the app
+        public static string iOSKeychainSecurityGroup = null;
+
+        // Microsoft Authentication client for native/mobile apps
+        public static IPublicClientApplication PCA;
+
+        // Microsoft Graph client
+        public static GraphServiceClient GraphClient;
+
+        // Microsoft Graph permissions used by app
+        private readonly string[] Scopes = OAuthSettings.Scopes.Split(' ');
         public App()
         {
             InitializeComponent();
+            var builder = PublicClientApplicationBuilder
+            .Create(OAuthSettings.ApplicationId)
+            .WithRedirectUri(OAuthSettings.RedirectUri);
 
+            if (!string.IsNullOrEmpty(iOSKeychainSecurityGroup))
+            {
+                builder = builder.WithIosKeychainSecurityGroup(iOSKeychainSecurityGroup);
+            }
+
+            PCA = builder.Build();
             MainPage = new MainPage();
         }
 
@@ -80,32 +110,115 @@ namespace XamarinGraphSample
         }
         public async Task SignIn()
         {
-            await GetUserInfo();
+            //await GetUserInfo();
 
-            IsSignedIn = true;
+            //IsSignedIn = true;
+            await InitializeGraphClientAsync();
         }
 
         public async Task SignOut()
         {
+            // Get all cached accounts for the app
+         // (Should only be one)
+            var accounts = await PCA.GetAccountsAsync();
+            while (accounts.Any())
+            {
+                // Remove the account info from the cache
+                await PCA.RemoveAsync(accounts.First());
+                accounts = await PCA.GetAccountsAsync();
+            }
             UserPhoto = null;
             UserName = string.Empty;
             UserEmail = string.Empty;
             IsSignedIn = false;
         }
-
         private async Task GetUserInfo()
         {
-            //TODO: Get real image from stream
-            //UserPhoto = ImageSource.FromStream(() => GetUserPhoto());
-            UserPhoto = ImageSource.FromUri(new Uri("https://www.dropbox.com/s/g94h6ij1p78nij2/Dara-Avatar.jpg"));
-            UserName = "Adele Vance";
-            UserEmail = "adelev@contoso.com";
+            // Get the logged on user's profile (/me)
+            var user = await GraphClient.Me.Request().GetAsync();
+
+            UserPhoto = ImageSource.FromStream(() => GetUserPhoto());
+            UserName = user.DisplayName;
+            UserEmail = string.IsNullOrEmpty(user.Mail) ? user.UserPrincipalName : user.Mail;
         }
+        //private async Task GetUserInfo()
+        //{
+        //    // First, attempt silent sign in
+        //    // If the user's information is already in the app's cache,
+        //    // they won't have to sign in again.
+        //    try
+        //    {
+        //        var accounts = await PCA.GetAccountsAsync();
+
+        //        var silentAuthResult = await PCA
+        //            .AcquireTokenSilent(Scopes, accounts.FirstOrDefault())
+        //            .ExecuteAsync();
+
+        //        Debug.WriteLine("User already signed in.");
+        //        Debug.WriteLine($"Successful silent authentication for: {silentAuthResult.Account.Username}");
+        //        Debug.WriteLine($"Access token: {silentAuthResult.AccessToken}");
+        //    }
+        //    catch (MsalUiRequiredException msalEx)
+        //    {
+        //        // This exception is thrown when an interactive sign-in is required.
+        //        Debug.WriteLine("Silent token request failed, user needs to sign-in: " + msalEx.Message);
+        //        // Prompt the user to sign-in
+        //        var interactiveRequest = PCA.AcquireTokenInteractive(Scopes);
+
+        //        if (AuthUIParent != null)
+        //        {
+        //            interactiveRequest = interactiveRequest
+        //                .WithParentActivityOrWindow(AuthUIParent);
+        //        }
+
+        //        var interactiveAuthResult = await interactiveRequest.ExecuteAsync();
+        //        Debug.WriteLine($"Successful interactive authentication for: {interactiveAuthResult.Account.Username}");
+        //        Debug.WriteLine($"Access token: {interactiveAuthResult.AccessToken}");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Debug.WriteLine("Authentication failed. See exception messsage for more details: " + ex.Message);
+        //    }
+        //}
 
         private Stream GetUserPhoto()
         {
             // Return the default photo
             return Assembly.GetExecutingAssembly().GetManifestResourceStream("GraphTutorial.no-profile-pic.png");
+        }
+        private async Task InitializeGraphClientAsync()
+        {
+            var currentAccounts = await PCA.GetAccountsAsync();
+            try
+            {
+                if (currentAccounts.Count() > 0)
+                {
+                    // Initialize Graph client
+                    GraphClient = new GraphServiceClient(new DelegateAuthenticationProvider(
+                        async (requestMessage) =>
+                        {
+                            var result = await PCA.AcquireTokenSilent(Scopes, currentAccounts.FirstOrDefault())
+                                .ExecuteAsync();
+
+                            requestMessage.Headers.Authorization =
+                                new AuthenticationHeaderValue("Bearer", result.AccessToken);
+                        }));
+
+                    await GetUserInfo();
+
+                    IsSignedIn = true;
+                }
+                else
+                {
+                    IsSignedIn = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Failed to initialized graph client.");
+                Debug.WriteLine($"Accounts in the msal cache: {currentAccounts.Count()}.");
+                Debug.WriteLine($"See exception message for details: {ex.Message}");
+            }
         }
     }
 }
