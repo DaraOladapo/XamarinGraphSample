@@ -6,9 +6,9 @@ namespace XamarinGraphSample.Models
 {
     public static class ApplicationScopes
     {
-        public const string CalendarScope = "User.Read Calendars.Read";
-        //public const string EmailScope = "User.Read Calendars.Read";
-        //public const string TasksScope = "User.Read Calendars.Read";
+        public const string CalendarReadScope = "User.Read Calendars.Read";
+        public const string ContactsReadScope = "User.Read Contacts.Read";
+        public const string EmailReadScope = "User.Read Mail.Read";
 
     }
 }

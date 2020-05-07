@@ -47,3 +47,9 @@ I followed the official documentation up till here then I realized the user info
     var interactiveAuthResult = await interactiveRequest.ExecuteAsync();
     //recursive call to the same function
     await InitializeGraphClientAsync();
+
+## Scopes
+So that I am able to get my graph API calls to work fine, I created an `ApplicationScopes` class that contains fields of strings. It looks something like the image below. This I will be using for my various scenarios.
+
+![Application Scopes](/Images/ApplicationScopes.png)
+
