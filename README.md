@@ -30,6 +30,8 @@ This is what it will look like. Be sure to replace `<yourAppID>` and `<yourAppBu
         public const string RedirectUri = "msauth://<yourAppBundleID>";
     }
 
+Also, be sure to go into your `AndroidManifest.xml` file to change the `package` value to what you would like it to be (it should be the value you used when setting up the Azure AD Application). Do the same for your iOS Project-that would be the `Info.plist` file (Bundle Identifier).
+
 From here on, all things should be good.
 
 ## Changes I made to my code
@@ -52,4 +54,6 @@ I followed the official documentation up till here then I realized the user info
 So that I am able to get my graph API calls to work fine, I created an `ApplicationScopes` class that contains fields of strings. It looks something like the image below. This I will be using for my various scenarios.
 
 ![Application Scopes](/Images/ApplicationScopes.png)
+
+For more information on scopes and permission, visit this [link](https://docs.microsoft.com/en-us/graph/permissions-reference#mail-permissions).
 

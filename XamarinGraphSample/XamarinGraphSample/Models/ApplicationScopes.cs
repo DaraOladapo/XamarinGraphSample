@@ -9,6 +9,5 @@ namespace XamarinGraphSample.Models
         public const string CalendarReadScope = "User.Read Calendars.Read";
         public const string ContactsReadScope = "User.Read Contacts.Read";
         public const string EmailReadScope = "User.Read Mail.Read";
-
     }
 }
