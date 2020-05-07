@@ -102,7 +102,7 @@
   <ItemGroup>
     <ProjectReference Include="..\XamarinGraphSample\XamarinGraphSample.csproj">
 
-      <Project>{8B104E6C-0EE5-4CE7-B0EE-7CE127F3680E}</Project>
+      <Project>{41E50573-34F6-4065-8915-2D4C55E5DA09}</Project>
 
       <Name>XamarinGraphSample</Name>
     </ProjectReference>
