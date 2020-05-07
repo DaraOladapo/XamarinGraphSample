@@ -4,7 +4,7 @@ using System.Linq;
 
 using Foundation;
 using UIKit;
-using Microsoft.Identity.Client;
+
 namespace XamarinGraphSample.iOS
 {
     // The UIApplicationDelegate for the application. This class is responsible for launching the 
@@ -26,11 +26,6 @@ namespace XamarinGraphSample.iOS
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
-        }
-        public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
-        {
-            AuthenticationContinuationHelper.SetAuthenticationContinuationEventArgs(url);
-            return true;
         }
     }
 }
