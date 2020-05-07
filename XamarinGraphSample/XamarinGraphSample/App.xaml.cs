@@ -219,9 +219,9 @@ namespace XamarinGraphSample
                     }
 
                     var interactiveAuthResult = await interactiveRequest.ExecuteAsync();
-                    Debug.WriteLine($"Successful interactive authentication for: {interactiveAuthResult.Account.Username}");
-                    Debug.WriteLine($"Access token: {interactiveAuthResult.AccessToken}");
                     await InitializeGraphClientAsync();
+                    //Debug.WriteLine($"Successful interactive authentication for: {interactiveAuthResult.Account.Username}");
+                    //Debug.WriteLine($"Access token: {interactiveAuthResult.AccessToken}");
                     //IsSignedIn = false;
                 }
             }

@@ -1,7 +1,7 @@
 # Xamarin Graph Sample
 ## Working with Microsoft Graph SDK in Xamarin.Forms
 
-Ths code sample shows how to use Microsoft Graph SDK with your Xamarin.Forms application.
+This code sample shows how to use Microsoft Graph SDK with your Xamarin.Forms application.
 
 Original Docs Link: https://docs.microsoft.com/en-us/graph/tutorials/xamarin
 
@@ -9,17 +9,41 @@ Original Docs Link: https://docs.microsoft.com/en-us/graph/tutorials/xamarin
 - Microsoft.Graph
 - Microsoft.Graph.Core
 - Microsoft.Identity.Client
-- Newtonsoft.Json
+
+## Prerequisites
+A personal Microsoft Account or an Office (Microsoft) 365 Subscription.
+
+- Sign up for a personal Microsoft Account [here](https://signup.live.com/signup?wa=wsignin1.0&rpsnv=12&ct=1454618383&rver=6.4.6456.0&wp=MBI_SSL_SHARED&wreply=https://mail.live.com/default.aspx&id=64855&cbcxt=mai&bk=1454618383&uiflavor=web&uaid=b213a65b4fdc484382b6622b3ecaa547&mkt=E-US&lc=1033&lic=1).
+- Sign up for the Office 365 Developer Program [here](https://developer.microsoft.com/office/dev-program).
+
 
 ## TODO: Create OAuthSettings.cs file
 To save my keys and ID, I had to add that OAuthSettings.cs to my .gitignore file.
 No worries, it's simple.
 In the Models Folder, create a C Sharp file called OAuthSettings.cs
-This is what it will look like. Be sure to replace `<yourAppID>` and `<youappbundleid>` with the Application (Client ID) of your Azure AD Application and the ID of your app bundle respectively.
+This is what it will look like. Be sure to replace `<yourAppID>` and `<yourAppBundleID>` with the Application (Client ID) of your Azure AD Application and the ID of your app bundle respectively.
 
-     public static class OAuthSettings
-        {
-            public const string ApplicationId = "<yourAppID>";
-            public const string Scopes = "User.Read Calendars.Read";
-            public const string RedirectUri = "msauth://<youappbundleid>";
-        }
+    public static class OAuthSettings
+    {
+        public const string ApplicationId = "<yourAppID>";
+        public const string Scopes = "User.Read Calendars.Read";
+        public const string RedirectUri = "msauth://<yourAppBundleID>";
+    }
+
+From here on, all things should be good.
+
+## Changes I made to my code
+
+I followed the official documentation up till here then I realized the user information was not showing after I finished the sign-in process (I might have missed some steps) so I modified my `InitializeGraphClientAsync()` method to initialize sign in if no account is found.
+
+    var interactiveRequest = PCA.AcquireTokenInteractive(Scopes);
+
+    if (AuthUIParent != null)
+    {
+        interactiveRequest = interactiveRequest
+            .WithParentActivityOrWindow(AuthUIParent);
+    }
+
+    var interactiveAuthResult = await interactiveRequest.ExecuteAsync();
+    //recursive call to the same function
+    await InitializeGraphClientAsync();
