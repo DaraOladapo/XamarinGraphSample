@@ -209,14 +209,27 @@ namespace XamarinGraphSample
                 }
                 else
                 {
-                    IsSignedIn = false;
+                    // Prompt the user to sign-in
+                    var interactiveRequest = PCA.AcquireTokenInteractive(Scopes);
+
+                    if (AuthUIParent != null)
+                    {
+                        interactiveRequest = interactiveRequest
+                            .WithParentActivityOrWindow(AuthUIParent);
+                    }
+
+                    var interactiveAuthResult = await interactiveRequest.ExecuteAsync();
+                    Debug.WriteLine($"Successful interactive authentication for: {interactiveAuthResult.Account.Username}");
+                    Debug.WriteLine($"Access token: {interactiveAuthResult.AccessToken}");
+                    await InitializeGraphClientAsync();
+                    //IsSignedIn = false;
                 }
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Failed to initialized graph client.");
-                Debug.WriteLine($"Accounts in the msal cache: {currentAccounts.Count()}.");
-                Debug.WriteLine($"See exception message for details: {ex.Message}");
+                //Debug.WriteLine("Failed to initialized graph client.");
+                //Debug.WriteLine($"Accounts in the msal cache: {currentAccounts.Count()}.");
+                //Debug.WriteLine($"See exception message for details: {ex.Message}");
             }
         }
     }
