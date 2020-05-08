@@ -60,4 +60,5 @@ For more information on scopes and permission, visit this [link](https://docs.mi
 ## Issues
 Running on an iOS emulator for now gives me an error telling me to enable KeyChain access. It works fine deploying to a phone.
 Trying to fix with this [doc](https://docs.microsoft.com/en-us/azure/active-directory/develop/msal-net-xamarin-ios-considerations) and [this](https://damienaicheh.github.io/azure/xamarin/xamarin.forms/2019/07/01/sign-in-with-microsoft-account-with-xamarin-en.html).
-
+This part of the former link solved it for me.
+![Xamarin iOS Entitlement](/Images/xamarin-ios-plist.png)
