@@ -10,7 +10,7 @@ using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace XamarinGraphSample
+namespace XamarinGraphSample.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CalendarPage : ContentPage

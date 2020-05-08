@@ -36,7 +36,7 @@ namespace XamarinGraphSample
                         MenuPages.Add(id, new NavigationPage(new WelcomePage()));
                         break;
                     case (int)MenuItemType.Calendar:
-                        MenuPages.Add(id, new NavigationPage(new CalendarPage()));
+                        MenuPages.Add(id, new NavigationPage(new Pages.CalendarPage()));
                         break;
                 }
             }

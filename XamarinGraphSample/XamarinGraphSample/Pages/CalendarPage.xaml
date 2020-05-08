@@ -6,7 +6,7 @@
              mc:Ignorable="d"
              Title="Calendar"
              xmlns:local="clr-namespace:XamarinGraphSample.Models"
-             x:Class="XamarinGraphSample.CalendarPage">
+             x:Class="XamarinGraphSample.Pages.CalendarPage">
     <ContentPage.Resources>
         <local:GraphDateTimeTimeZoneConverter x:Key="DateConverter" />
     </ContentPage.Resources>
